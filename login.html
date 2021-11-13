@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Login - Online Doctor Appointment
+        </title>
+        <script src="JQ.js"></script>
+        <script>
+            $(document).ready(
+                function(){
+                    $("#form").submit(
+                        function(){
+                            name = $("#username").val();
+                            pass = $("#password").val();
+                            type = $('input:radio[name=type]:checked').val();
+                            $.post("validate.php",
+                            {
+                                'un':name,
+                                'pass': pass,
+                                'type': type
+                            },
+                                function(data){
+                                    if(data == "pTrue"){
+                                        $(location).attr("href","patient.php?username="+name);
+                                    }
+                                    else if(data == "pFalse"){
+                                        $("#display").html("Wrong Username or Password");
+                                    }
+                                    else if(data == "dTrue"){
+                                        $(location).attr("href","doctor.php?username="+name);
+                                    }
+                                    else if(data == "dFalse"){
+                                        $("#display").html("Wrong Username or Password");
+                                    }
+                                }
+                            );
+                       return false; 
+                        }
+                    );
+                }
+            );
+        </script>
+        <style>
+            body{
+                margin: 2% auto;
+                background-image: url('logBG.jpg');
+                background-size: 1380px 760px;
+                background-repeat: no-repeat;
+            }
+            #container{
+                width: 350px;
+                background-color:  #ffffff;
+                box-shadow: 0px 0px 5px white;
+                border: 1px solid white;
+            }
+            #logForm{
+                width: 350px;
+                background-color:  #ffffff;
+                
+            }
+            .inp{
+                margin: 15px 10px;
+                width: 300px;
+                height: 40px;
+                border-bottom: 2px solid darkgray;
+                border-left: none;
+                border-right: none;
+                border-top: none;
+                font-weight: bold;
+                font-size: 15px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <center>
+            
+            
+            <div id="container">
+                    <h2 style="color:darkkhaki ; text-align: center ">L O G I N</h2>
+                <div id="logForm">
+                
+                <form id="form">
+                    <div>
+                        <img src="logPic.jpg" style="width:350px">
+                    </div>
+                    <input type="text" id="username" class="inp" placeholder="  Username" required><br>
+                    <input type="password" id="password"  class="inp" placeholder="  Password" required>
+                    
+                    
+                    Patient<input type="radio" name="type" value="patient" required>
+                    Doctor<input type="radio" name="type" value="doctor"  required>
+                    <br><br><br>
+                    <div id="display"></div>
+                    <input type="submit" class="inp"  style="background-color: darkkhaki" value="Login"><br><br>
+                    <a href="registration.html">Patient Registration</a>
+                </form>
+            </div>
+        </div>
+        </center>
+    </body>
+</html>

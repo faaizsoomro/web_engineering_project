@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Registration - Online Doctor Appointment
+        </title>
+        <script src="JQ.js"></script>
+        <script>
+            $(document).ready(
+                function(){
+                    $("#form").submit(
+                        function(){
+                            username = $("#username").val();
+                            pass = $("#password").val();
+                            cpass = $("#confirmpassword").val();
+                            fullname = $("#fullname").val();
+                            pnum = $("#pnum").val();
+                            address = $("#address").val();
+                            email = $("#email").val();
+                            age = $("#age").val();
+                            gender = $('input:radio[name=gender]:checked').val();
+                            if(pass == cpass){
+                                    $.post("regVal.php",
+                                    {
+                                        'un':username,
+                                        'pass': pass,
+                                        'fullname':fullname,
+                                        'pnum':pnum,
+                                        'address':address,
+                                        'email':email,
+                                        'age':age,
+                                        'gender':gender
+                                    },
+                                        function(data){
+                                            if(data==1){
+                                            $("#logForm").html("USER SUCCESSFULLY REGISTERED");
+                                        }
+                                            else{
+                                                $("#display").html(data);
+                                            }
+                                        }
+                                    );
+                            }
+                            else{
+                                $("#display").html("Password Do not match");
+                            }
+                       return false; 
+                        }
+                    );
+                }
+            );
+        </script>
+        <style>
+            body{
+                margin: 2% auto;
+                background-image: url('logBG.jpg');
+                background-size: 1380px 760px;
+                background-repeat: no-repeat;
+            }
+            #container{
+                width: 350px;
+                background-color:  #ffffff;
+                box-shadow: 0px 0px 5px white;
+                border: 1px solid white;
+            }
+            #logForm{
+                width: 350px;
+                background-color:  #ffffff;
+                
+            }
+            .inp{
+                margin: 5px 5px;
+                width: 300px;
+                height: 40px;
+                border-bottom: 2px solid darkgray;
+                border-left: none;
+                border-right: none;
+                border-top: none;
+                font-weight: bold;
+                font-size: 15px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <center>
+            
+            
+            <div id="container">
+                    <h2 style="color:darkkhaki ; text-align: center ">Patient Registration</h2>
+                <div id="logForm">
+                
+                <form id="form">
+                    <input type="text" id="username" class="inp" placeholder="  Username" required>
+                    <input type="password" id="password" id="pass" class="inp" placeholder="  Password" required>
+                    <input type="password" id="confirmpassword" class="inp" placeholder="  Confirm Password" required>
+                    
+                    <input type="text" id="fullname" class="inp" placeholder="  Full Name" required>
+                    <input type="number" id="pnum" class="inp" placeholder="  Phone Number" required>
+                    <input type="text" id="address" class="inp" placeholder="  Address" required>
+                    <input type="email" id="email" class="inp" placeholder="  Email" required><br>
+                    <input type="number" id="age" class="inp" placeholder="  Age" required><br>
+                    Male<input type="radio" name="gender" value="male" required>
+                    Female<input type="radio" name="gender" value="female" required>
+
+                    <div id="display"></div>
+                    <input type="submit" class="inp"  style="background-color: darkkhaki" value="Register"><br><br>
+                </form>
+            </div>
+        </div>
+        </center>
+    </body>
+</html>
